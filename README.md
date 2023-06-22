@@ -2,6 +2,13 @@
 
 This project is a Golang application built using the Echo framework to serve a RESTful API. It utilizes Swagger for API documentation, NATS as a message broker for event-based communication, MySQL as the database, and Docker for containerization. Additionally, unit tests have been implemented for the repository and usecase layers.
 
+## Rules
+
+- This application has two types of users (Manager, Technician).
+- The technician performs tasks and is only able to see, create or update his own performed tasks.
+- The manager can see tasks from all the technicians, delete them, and should be notified when some tech performs a task.
+- A task has a summary (max: 2500 characters) and a date when it was performed, the summary from the task can contain personal information.
+
 ## Prerequisites
 
 Make sure you have the following installed:
