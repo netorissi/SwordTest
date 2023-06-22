@@ -1,0 +1,334 @@
+definitions:
+  model.Task:
+    properties:
+      completed_at:
+        type: string
+      id:
+        type: integer
+      summary:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  shared.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  shared.Response:
+    type: object
+  task.createRequest:
+    properties:
+      summary:
+        maxLength: 2500
+        type: string
+    required:
+    - summary
+    type: object
+  task.updateRequest:
+    properties:
+      summary:
+        maxLength: 2500
+        type: string
+    required:
+    - summary
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/tasks:
+    get:
+      description: Only manager can list all tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Task'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get all tasks
+      tags:
+      - task
+    post:
+      description: Only tech can create task
+      parameters:
+      - description: Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/task.createRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create task
+      tags:
+      - task
+  /v1/tasks/{id}:
+    delete:
+      description: Only manager can delete task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete task
+      tags:
+      - task
+    put:
+      description: Only owner can update task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/task.updateRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update task
+      tags:
+      - task
+  /v1/tasks/{id}/complete:
+    patch:
+      description: Only owner can complete task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Complete task
+      tags:
+      - task
+  /v1/tasks/me:
+    get:
+      description: Only tech can list my tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Task'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/shared.Response'
+            - properties:
+                error:
+                  $ref: '#/definitions/shared.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get my tasks
+      tags:
+      - task
+securityDefinitions:
+  ApiKeyAuth:
+    description: Esta é uma rota privada
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

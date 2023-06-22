@@ -1,0 +1,19 @@
+{
+    "server": {
+      "base_path": "/api",
+      "port": ":8080"
+    },
+    "swagger": {
+      "title": "Swagger Sword API",
+      "description": "This is a backend for the sword test.\n\nTokens Techs for tests: ['Bearer example_token_tech_1', 'Bearer example_token_tech_2']\nToken Manager for tests: ['Bearer example_token_manager']",
+      "version": "1.0",
+      "host": "localhost"
+    },
+    "mysql": {
+      "writer_url": "sword_test:5w0rd@tcp(localhost:3306)/sword?readTimeout=30s&writeTimeout=30s&parseTime=true&multiStatements=true",
+      "reader_url": "sword_test:5w0rd@tcp(localhost:3306)/sword?readTimeout=30s&writeTimeout=30s&parseTime=true"
+    },
+    "broker": {
+      "url": "localhost:4222"
+    }
+}

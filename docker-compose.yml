@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+    # networks:
+    #   - sword_network
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=5w0rd
+      - MYSQL_DATABASE=sword
+      - MYSQL_USER=sword_test
+      - MYSQL_PASSWORD=5w0rd
+    # networks:
+    #   - sword_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - nats
+      - db
+    # networks:
+    #   - sword_network
+
+# networks:
+#   sword_network:
