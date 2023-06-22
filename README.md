@@ -50,9 +50,9 @@ Make sure you have the following installed:
 
 - Authorize the user to access the APIs. The token should be in the format `Bearer example_token_tech_1`.
 Use the following tokens for testing:
-`Bearer example_token_tech_1` - User tech 1
-`Bearer example_token_tech_2` - User tech 2
-`Bearer example_token_manager` - User manager
+1. `Bearer example_token_tech_1` - User tech 1
+2. `Bearer example_token_tech_2` - User tech 2
+3. `Bearer example_token_manager` - User manager
 
 ![Swagger Docs](./assets/swagger.png)
 
