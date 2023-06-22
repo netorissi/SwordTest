@@ -46,6 +46,69 @@ Use the following tokens for testing:
 
 ![Swagger Docs](./assets/swagger.png)
 
+## Using cURLs
+> Only manager can list all tasks
+
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/tasks' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer example_token_manager'
+```
+
+> Only tech can create task
+
+```
+curl -X 'POST' \
+  'http://localhost:8080/api/v1/tasks' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer example_token_tech_1' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "summary": "string"
+}'
+```
+
+> Only tech can list my tasks
+
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/tasks/me' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer example_token_tech_1'
+```
+
+> Only owner can update task
+
+```
+curl -X 'PUT' \
+  'http://localhost:8080/api/v1/tasks/:id' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer example_token_tech_1' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "summary": "string"
+}'
+```
+
+> Only manager can delete task
+
+```
+curl -X 'DELETE' \
+  'http://localhost:8080/api/v1/tasks/:id' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer example_token_manager'
+```
+
+> Only owner can complete task
+
+```
+curl -X 'PATCH' \
+  'http://localhost:8080/api/v1/tasks/:id/complete' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer example_token_tech_1'
+```
+
 ## Mocks
 
 - Three test users were generated in the database for testing purposes.
