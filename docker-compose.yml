@@ -1,14 +1,8 @@
 version: '3'
 services:
-  nats:
-    image: nats:latest
-    ports:
-      - "4222:4222"
-    # networks:
-    #   - sword_network
-
   db:
     image: mysql:5.7
+    restart: "always"
     ports:
       - "3306:3306"
     environment:
@@ -16,8 +10,15 @@ services:
       - MYSQL_DATABASE=sword
       - MYSQL_USER=sword_test
       - MYSQL_PASSWORD=5w0rd
-    # networks:
-    #   - sword_network
+    networks:
+      - mynet
+      
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+    networks:
+      - mynet
 
   app:
     build:
@@ -25,11 +26,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    restart: 
+      "on-failure"
     depends_on:
-      - nats
-      - db
-    # networks:
-    #   - sword_network
+      db:
+        condition: service_started
+      nats:
+        condition: service_started
+    networks:
+      - mynet
 
-# networks:
-#   sword_network:
+networks:
+  mynet:
+    driver: bridge

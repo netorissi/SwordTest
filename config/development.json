@@ -10,10 +10,10 @@
       "host": "localhost"
     },
     "mysql": {
-      "writer_url": "sword_test:5w0rd@tcp(localhost:3306)/sword?readTimeout=30s&writeTimeout=30s&parseTime=true&multiStatements=true",
-      "reader_url": "sword_test:5w0rd@tcp(localhost:3306)/sword?readTimeout=30s&writeTimeout=30s&parseTime=true"
+      "writer_url": "sword_test:5w0rd@tcp(host.docker.internal:3306)/sword?readTimeout=30s&writeTimeout=30s&parseTime=true&multiStatements=true",
+      "reader_url": "sword_test:5w0rd@tcp(host.docker.internal:3306)/sword?readTimeout=30s&writeTimeout=30s&parseTime=true"
     },
     "broker": {
-      "url": "localhost:4222"
+      "url": "host.docker.internal:4222"
     }
 }
