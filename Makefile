@@ -1,7 +1,7 @@
 .PHONY: run
 run: ## run it will instance server
 	@echo Building api
-	docker-compose up -d
+	docker-compose up
 
 .PHONY: stop
 stop: ## stop instance server

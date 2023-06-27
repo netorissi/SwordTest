@@ -33,7 +33,7 @@ Make sure you have the following installed:
    ```
    OR
    ```shell
-   docker-compose up -d
+   docker-compose up
    ```
 
    The server will be up and running on port 8080.
